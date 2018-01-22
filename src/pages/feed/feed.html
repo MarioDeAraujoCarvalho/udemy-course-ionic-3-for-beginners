@@ -18,34 +18,34 @@
 
     <ion-item>
       <ion-avatar item-start>
-        <img src="http://www.synckware.com/mario-carvalho/images/avatar.png">
+        <img src="{{ objeto_feed.img_avatar_link }}">
       </ion-avatar>
-      <h2 class="feed_title">{{ nome_usuario }}</h2>
-      <p class="feed_date">November 5, 1955</p>
+      <h2>{{ objeto_feed.titulo }}</h2>
+      <p>{{ objeto_feed.data }}</p>
     </ion-item>
 
-    <img src="https://cdn-enterprise.discourse.org/ionicframework/uploads/default/original/3X/5/9/59963d686139d1fcb1fb2385ec12883b7d9d97a2.jpg">
+    <img src="{{ objeto_feed.img_comment_link }}">
 
     <ion-card-content>
-      <p>Eu me tornei aquilo que jurei destruir... #TeamIonic</p>
+      <p>{{ objeto_feed.descricao }}</p>
     </ion-card-content>
 
     <ion-row>
       <ion-col>
         <button ion-button icon-left clear small>
           <ion-icon name="thumbs-up"></ion-icon>
-          <div>12 Likes</div>
+          <div>{{ objeto_feed.quant_likes }}</div>
         </button>
       </ion-col>
       <ion-col>
         <button ion-button icon-left clear small>
           <ion-icon name="text"></ion-icon>
-          <div>4 Comments</div>
+          <div>{{ objeto_feed.quant_comments }}</div>
         </button>
       </ion-col>
       <ion-col center text-center>
         <ion-note>
-          11h ago
+          {{ objeto_feed.time_comment }}
         </ion-note>
       </ion-col>
     </ion-row>
