@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { MovieProvider } from '../../providers/movie/movie';
 
 /**
  * Generated class for the FeedPage page.
@@ -12,8 +13,12 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 @Component({
   selector: 'page-feed',
   templateUrl: 'feed.html',
+  providers: [
+    MovieProvider
+  ]
 })
 export class FeedPage {
+  /*
   public objeto_feed = {
     titulo: "Mário Carvalho",
     img_avatar_link: "http://www.synckware.com/mario-carvalho/images/avatar.png",
@@ -26,17 +31,34 @@ export class FeedPage {
   }
   public nome_usuario:string = "Mário Carvalho";//Apenas string
   public nome_usuario_2:string = "Camilo Carromeu";//Apenas string
+*/
+  public lista_filmes = Array<any>();
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-  }
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public movieProvider: MovieProvider
+    ) {}
 
   public somaDoisNumeros(num1:number, num2:number): void{
     alert(num1 + num2);
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad FeedPage');
+    console.log('FeedPage Iniciada\n');
     //this.somaDoisNumeros(10,2);
+    this.movieProvider.getLatesMovies().subscribe(
+      data=>{//Sucesso
+
+        const response = (data as any);// Transforma em qualquer coisa sem tipo
+        const objeto_retorno = JSON.parse(response._body);// Converte pra JSON
+        this.lista_filmes = objeto_retorno.results;//Results
+        console.log(objeto_retorno);
+
+      }, error =>{//Erro
+        console.log(error);
+      }
+    );
   }
 
 }
