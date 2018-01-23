@@ -31,7 +31,7 @@ import { MovieProvider } from '../providers/movie/movie';
     HttpModule
   ],
   bootstrap: [IonicApp],
-  entryComponents: [
+  entryComponents: [//As novas paginas vao aqui
     MyApp,
     AboutPage,
     ContactPage,
