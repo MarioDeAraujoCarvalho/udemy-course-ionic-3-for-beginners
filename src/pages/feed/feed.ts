@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { MovieProvider } from '../../providers/movie/movie';
+import { LoadingController } from 'ionic-angular/components/loading/loading-controller';
+import { FilmeDetalhesPage } from '../filme-detalhes/filme-detalhes';
 
 /**
  * Generated class for the FeedPage page.
@@ -33,20 +35,28 @@ export class FeedPage {
   public nome_usuario_2:string = "Camilo Carromeu";//Apenas string
 */
   public lista_filmes = Array<any>();
+  public loader;
+  public refresher;
+  public isRefreshing: boolean = false;
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    public movieProvider: MovieProvider
+    public movieProvider: MovieProvider,
+    public loadingCtrl: LoadingController
     ) {}
 
   public somaDoisNumeros(num1:number, num2:number): void{
     alert(num1 + num2);
   }
 
-  ionViewDidLoad() {
+  ionViewDidEnter() {
+   this.carregarFilmes();
+  }
+  carregarFilmes(){
     console.log('FeedPage Iniciada\n');
     //this.somaDoisNumeros(10,2);
+    this.presentLoading();
     this.movieProvider.getLatesMovies().subscribe(
       data=>{//Sucesso
 
@@ -54,11 +64,43 @@ export class FeedPage {
         const objeto_retorno = JSON.parse(response._body);// Converte pra JSON
         this.lista_filmes = objeto_retorno.results;//Results
         console.log(objeto_retorno);
+        this.closeLoading();
+        if(this.isRefreshing){
+          this.isRefreshing = false;
+          this.refresher.complete();
+        }
 
       }, error =>{//Erro
+        this.closeLoading();//Fechar dialogo
+        if(this.isRefreshing){
+          this.isRefreshing = false;
+          this.refresher.complete();
+        }
         console.log(error);
       }
     );
+  }
+
+  presentLoading() {
+    this.loader = this.loadingCtrl.create({
+      content: "Carregando..."
+        });
+      this.loader.present();
+  }
+ closeLoading() {
+    this.loader.dismiss();
+  }
+
+  doRefresh(refresher) {
+    this.refresher = refresher;
+    this.isRefreshing = true;
+    console.log('Begin async operation', refresher);
+    this.carregarFilmes();
+  }
+
+  abrirDetalhes(filme){
+    console.log(filme);
+    this.navCtrl.push(FilmeDetalhesPage, {id: filme.id});
   }
 
 }

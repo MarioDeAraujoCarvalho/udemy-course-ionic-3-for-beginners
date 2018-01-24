@@ -15,7 +15,7 @@ export class MovieProvider {
   }
 
   getLatesMovies(){
-    console.clear();
+    //console.clear();
     return this.http.get(this.baseApiPath + `/movie/popular?api_key=` + this.getApiKey() + `&language=pt-BR`);
   }
 

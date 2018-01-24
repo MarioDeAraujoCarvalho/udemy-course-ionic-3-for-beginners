@@ -14,6 +14,14 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { FeedPageModule } from '../pages/feed/feed.module';
 import { IntroPageModule } from '../pages/intro/intro.module';
 import { MovieProvider } from '../providers/movie/movie';
+import { ConfiguracoesPageModule } from '../pages/configuracoes/configuracoes.module';
+import { PerfilPageModule } from '../pages/perfil/perfil.module';
+import { SobrePageModule } from '../pages/sobre/sobre.module';
+import { ConfiguracoesPage } from '../pages/configuracoes/configuracoes';
+import { PerfilPage } from '../pages/perfil/perfil';
+import { SobrePage } from '../pages/sobre/sobre';
+import { FilmeDetalhesPage } from '../pages/filme-detalhes/filme-detalhes';
+import { FilmeDetalhesPageModule } from '../pages/filme-detalhes/filme-detalhes.module';
 
 @NgModule({
   declarations: [
@@ -28,7 +36,11 @@ import { MovieProvider } from '../providers/movie/movie';
     IonicModule.forRoot(MyApp),
     FeedPageModule,
     IntroPageModule,
-    HttpModule
+    HttpModule,
+    ConfiguracoesPageModule,
+    PerfilPageModule,
+    SobrePageModule,
+    FilmeDetalhesPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [//As novas paginas vao aqui
@@ -36,7 +48,11 @@ import { MovieProvider } from '../providers/movie/movie';
     AboutPage,
     ContactPage,
     HomePage,
-    TabsPage
+    TabsPage,
+    ConfiguracoesPage,
+    PerfilPage,
+    SobrePage,
+    FilmeDetalhesPage
   ],
   providers: [
     StatusBar,
