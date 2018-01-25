@@ -34,11 +34,16 @@ export class FeedPage {
   public nome_usuario:string = "Mário Carvalho";//Apenas string
   public nome_usuario_2:string = "Camilo Carromeu";//Apenas string
 */
+  public items;
+  public filme: string = "";
+
   public lista_filmes = Array<any>();
+  public lista_filmes_aux = Array<any>();
   public page = 1;
   public loader;
   public refresher;
   public isRefreshing: boolean = false;
+  public infiniteScroll;
 
   constructor(
     public navCtrl: NavController,
@@ -51,20 +56,30 @@ export class FeedPage {
     alert(num1 + num2);
   }
 
-  ionViewDidEnter() {
+  ionViewDidLoad() {
    this.carregarFilmes();
   }
-  carregarFilmes(){
+  carregarFilmes(newpage: boolean = false){
     console.log('FeedPage Iniciada\n');
     //this.somaDoisNumeros(10,2);
     this.presentLoading();
-    this.movieProvider.getLatesMovies().subscribe(
+    this.movieProvider.getLatesMovies(this.page).subscribe(
       data=>{//Sucesso
 
         const response = (data as any);// Transforma em qualquer coisa sem tipo
         const objeto_retorno = JSON.parse(response._body);// Converte pra JSON
-        this.lista_filmes = objeto_retorno.results;//Results
+
+        if(newpage){
+          this.lista_filmes = this.lista_filmes.concat(objeto_retorno.results);
+          console.log(this.page);
+          console.log(this.lista_filmes);
+          this.infiniteScroll.complete();
+        }else{
+          this.lista_filmes = objeto_retorno.results;
+        }
+
         console.log(objeto_retorno);
+
         this.closeLoading();
         if(this.isRefreshing){
           this.isRefreshing = false;
@@ -105,16 +120,34 @@ export class FeedPage {
   }
 
   doInfinite(infiniteScroll) {
-    console.log('Begin async operation');
+    this.page++;
+    this.infiniteScroll = infiniteScroll;
+    this.carregarFilmes(true);
+  }
 
-    setTimeout(() => {
-      for (let i = 0; i < 30; i++) {
-        this.items.push( this.items.length );
-      }
+  getItems(ev) {
+    // Reset items back to all of the items
+    //this.carregarFilmes(true);
 
-      console.log('Async operation has ended');
-      infiniteScroll.complete();
-    }, 500);
+    // set val to the value of the ev target
+    var val = ev.target.value;
+
+    let lista_filmes_aux = Array<any>();
+    lista_filmes_aux = this.lista_filmes;
+
+    // if the value is an empty string don't filter the items
+    if (val && val.trim() != '') {
+      console.log("Search contem texto: " + val);
+     
+      this.lista_filmes = lista_filmes_aux.filter((filme) => {
+        return ((filme.title).toLowerCase().indexOf(val.toLowerCase()) > -1);
+      });
+
+    }else{
+      console.log("Search esta vazia!");
+      this.page = 1;
+      this.carregarFilmes();
+    }
   }
   
 }

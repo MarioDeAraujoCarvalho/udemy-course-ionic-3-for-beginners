@@ -14,9 +14,12 @@
 
 
 <ion-content padding>
+  
   <ion-refresher (ionRefresh)="doRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
+
+  <ion-searchbar (ionInput)="getItems($event)"></ion-searchbar>
 
   <ion-card *ngFor="let filme of lista_filmes">
     <ion-item>
@@ -58,5 +61,9 @@
     </button>
 
   </ion-card>
+
+  <ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 
 </ion-content>

@@ -22,6 +22,9 @@ import { PerfilPage } from '../pages/perfil/perfil';
 import { SobrePage } from '../pages/sobre/sobre';
 import { FilmeDetalhesPage } from '../pages/filme-detalhes/filme-detalhes';
 import { FilmeDetalhesPageModule } from '../pages/filme-detalhes/filme-detalhes.module';
+import { CartolaProvider } from '../providers/cartola/cartola';
+import { AtletasPageModule } from '../pages/atletas/atletas.module';
+import { AtletasPage } from '../pages/atletas/atletas';
 
 @NgModule({
   declarations: [
@@ -40,7 +43,8 @@ import { FilmeDetalhesPageModule } from '../pages/filme-detalhes/filme-detalhes.
     ConfiguracoesPageModule,
     PerfilPageModule,
     SobrePageModule,
-    FilmeDetalhesPageModule
+    FilmeDetalhesPageModule,
+    AtletasPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [//As novas paginas vao aqui
@@ -52,13 +56,15 @@ import { FilmeDetalhesPageModule } from '../pages/filme-detalhes/filme-detalhes.
     ConfiguracoesPage,
     PerfilPage,
     SobrePage,
-    FilmeDetalhesPage
+    FilmeDetalhesPage,
+    AtletasPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    MovieProvider
+    MovieProvider,
+    CartolaProvider
   ]
 })
 export class AppModule {}

@@ -14,9 +14,9 @@ export class MovieProvider {
     console.log('Iniciando Provider: MovieProvider');
   }
 
-  getLatesMovies(){
+  getLatesMovies(page = 1){
     //console.clear();
-    return this.http.get(this.baseApiPath + `/movie/popular?api_key=` + this.getApiKey() + `&language=pt-BR`);
+    return this.http.get(this.baseApiPath + `/movie/popular?page=${page}&api_key=` + this.getApiKey() + `&language=pt-BR`);
   }
 
   getMovieDetails(filme_id){
