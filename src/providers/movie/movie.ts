@@ -19,6 +19,11 @@ export class MovieProvider {
     return this.http.get(this.baseApiPath + `/movie/popular?api_key=` + this.getApiKey() + `&language=pt-BR`);
   }
 
+  getMovieDetails(filme_id){
+    //console.clear();
+    return this.http.get(this.baseApiPath + `/movie/${filme_id}?api_key=` + this.getApiKey() + `&language=pt-BR`);
+  }
+
   getApiKey(): string{
     let API_KEY:string = "529a470d8eefa52c7a762ad9a65ee7a4";
     return API_KEY;

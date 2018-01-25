@@ -35,6 +35,7 @@ export class FeedPage {
   public nome_usuario_2:string = "Camilo Carromeu";//Apenas string
 */
   public lista_filmes = Array<any>();
+  public page = 1;
   public loader;
   public refresher;
   public isRefreshing: boolean = false;
@@ -103,4 +104,17 @@ export class FeedPage {
     this.navCtrl.push(FilmeDetalhesPage, {id: filme.id});
   }
 
+  doInfinite(infiniteScroll) {
+    console.log('Begin async operation');
+
+    setTimeout(() => {
+      for (let i = 0; i < 30; i++) {
+        this.items.push( this.items.length );
+      }
+
+      console.log('Async operation has ended');
+      infiniteScroll.complete();
+    }, 500);
+  }
+  
 }
